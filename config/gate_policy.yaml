@@ -1,0 +1,8 @@
+# Default: approval required at all five gates (section 5.1).
+# Changing this file needs a configuration change approved by the Client team.
+gates:
+  requirements: true
+  design: true
+  developer: true
+  testing: true
+  security: true

@@ -1,0 +1,34 @@
+# Non-secret settings only. Secrets come from the vault / environment.
+repair_loop_cap: 3
+
+postgres_dsn_env: ADLC_POSTGRES_DSN      # env var holding the DSN
+webhook_secret_env: ADLC_WEBHOOK_SECRET  # env var holding the Jira webhook HMAC secret
+
+jira:
+  base_url: https://your-company.atlassian.net
+  token_env: ADLC_JIRA_TOKEN
+  ready_label: ADLC
+  ready_status: "Ready for ADLC"
+  gate_status:            # Jira status to move the issue to while waiting at each gate
+    requirements: "Requirements Review"
+    design: "Design Review"
+    developer: "Code Review"
+    testing: "Test Review"
+    security: "Security Review"
+
+github:
+  api_url: https://api.github.com
+  repo: your-org/vista
+  token_env: ADLC_GITHUB_TOKEN
+
+copilot_cli:
+  # Command template. Check your installed Copilot CLI for the exact flags.
+  command: ["copilot", "--agent", "{agent}", "--skill", "{skill}", "--context", "{context_pack}", "--non-interactive"]
+  timeout_seconds: 3600
+
+credit_headroom:        # entry criterion per stage (section 3.4)
+  requirements: 70
+  design: 70
+  developer: 120
+  testing: 120
+  security: 70
