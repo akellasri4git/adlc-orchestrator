@@ -1,6 +1,6 @@
 """HTTP entry points: start a run, and receive signed Jira approval webhooks.
 Expected webhook body (configure in a Jira Automation rule):
-  {"change_id": "VISTA-123", "stage": "design", "decision": "approved" | "changes_requested", "comments": "..."}"""
+  {"change_id": "CHANGE-123", "stage": "design", "decision": "approved" | "changes_requested", "comments": "..."}"""
 import hashlib
 import hmac
 import json

@@ -108,7 +108,7 @@ Send:
 ```bash
 curl -X POST http://127.0.0.1:8080/runs \
   -H 'Content-Type: application/json' \
-  -d '{"change_id":"VISTA-DEMO"}'
+  -d '{"change_id":"CHANGE-DEMO"}'
 ```
 
 The run pauses at the first gate. This is the stub demo behavior; no Jira approval is required automatically.
@@ -120,7 +120,7 @@ Approval webhooks must contain a HMAC SHA-256 signature. The demo secret is `dem
 macOS/Linux:
 
 ```bash
-BODY='{"change_id":"VISTA-DEMO","stage":"requirements","decision":"approved","comments":""}'
+BODY='{"change_id":"CHANGE-DEMO","stage":"requirements","decision":"approved","comments":""}'
 SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac 'demo-secret' | sed 's/^.* //')
 
 curl -X POST http://127.0.0.1:8080/webhooks/jira \
@@ -141,7 +141,7 @@ To request a change instead:
 
 ```json
 {
-  "change_id": "VISTA-DEMO",
+  "change_id": "CHANGE-DEMO",
   "stage": "requirements",
   "decision": "changes_requested",
   "comments": "Fix acceptance criterion AC-2"

@@ -18,7 +18,7 @@ jira:
 
 github:
   api_url: https://api.github.com
-  repo: your-org/vista
+  repo: your-org/your-repo
   token_env: ADLC_GITHUB_TOKEN
 
 copilot_cli:

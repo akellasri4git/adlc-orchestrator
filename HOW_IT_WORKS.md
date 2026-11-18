@@ -21,7 +21,7 @@ The project records the entire journey so it can be paused, resumed, or checked 
 
 ## The main example
 
-Imagine a change request called `VISTA-123`:
+Imagine a change request called `CHANGE-123`:
 
 > “Add password reset for customer accounts.”
 
@@ -88,7 +88,7 @@ The run state is a shared information folder passed between stages.
 
 It contains:
 
-- `change_id`: for example, `VISTA-123`
+- `change_id`: for example, `CHANGE-123`
 - `stage`: the stage that last ran
 - `status`: running, waiting for a gate, completed, or halted
 - `gate_decisions`: approved or changes requested at each gate
@@ -142,7 +142,7 @@ Tools perform external or supporting work.
 |---|---|---|
 | Copilot CLI | Runs an AI agent for a stage | Generate requirements |
 | Jira | Read ticket status, comment, and request approval | “Requirements are ready for approval” |
-| GitHub | Create branches and pull requests | Create `adlc/VISTA-123` |
+| GitHub | Create branches and pull requests | Create `adlc/CHANGE-123` |
 | Context Builder | Combine earlier outputs and reviewer feedback | Show requirements to the design agent |
 | Policy | Block unsafe prompts or permissions | Do not allow file deletion |
 | Budget | Check AI credit headroom and record usage | Stop if credit is too low |
@@ -166,7 +166,7 @@ For example:
 
 ```json
 {
-  "change_id": "VISTA-123",
+  "change_id": "CHANGE-123",
   "stage": "requirements",
   "decision": "changes_requested",
   "comments": "Add a password-reset expiration time"
@@ -231,7 +231,7 @@ A caller sends:
 
 ```json
 {
-  "change_id": "VISTA-123"
+  "change_id": "CHANGE-123"
 }
 ```
 
@@ -259,7 +259,7 @@ Jira or another approved system sends:
 
 ```json
 {
-  "change_id": "VISTA-123",
+  "change_id": "CHANGE-123",
   "stage": "requirements",
   "decision": "approved",
   "comments": ""
@@ -319,7 +319,7 @@ repair-loop cap reached
 
 ## Test data
 
-The repository contains automated test fixtures using synthetic change ID `VISTA-1`.
+The repository contains automated test fixtures using synthetic change ID `CHANGE-1`.
 
 These are code-level test inputs, not live company data:
 
@@ -336,7 +336,7 @@ The test suite uses:
 
 No Jira issue, GitHub repository, or production account is changed by the tests.
 
-The earlier local demo used `VISTA-DEMO`. Its server state is temporary and held only in memory. Context-pack JSON files may appear under `/tmp/adlc-packs` on macOS/Linux during testing or demo use.
+The earlier local demo used `CHANGE-DEMO`. Its server state is temporary and held only in memory. Context-pack JSON files may appear under `/tmp/adlc-packs` on macOS/Linux during testing or demo use.
 
 ## What is real and what is simulated?
 
