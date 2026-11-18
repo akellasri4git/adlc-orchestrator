@@ -59,3 +59,14 @@ def test_repair_cap_halts_the_run():
     vals = graph.get_state(cfg).values
     assert vals["status"] == "halted" and vals["halt_reason"] == "repair-loop cap reached"
     assert any("repair loops" in c[1] for c in tools.jira.comments)
+
+
+def test_mock_tool_mode_uses_script(monkeypatch):
+    monkeypatch.setenv("ADLC_MODE", "mock")
+    monkeypatch.setenv("ADLC_MOCK_SCRIPT", '{"testing":["fail","pass"]}')
+    from src.tools import build_tools
+    tools = build_tools(load_settings())
+    first = tools.copilot.run("testing", "general-purpose", "test", "/tmp/pack", {})
+    second = tools.copilot.run("testing", "general-purpose", "test", "/tmp/pack", {})
+    assert first["verdict"] == "fail"
+    assert second["verdict"] == "pass"

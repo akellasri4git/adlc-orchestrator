@@ -28,6 +28,17 @@ def stub_tools(**overrides) -> Tools:
 
 
 def build_tools(settings) -> Tools:
+    """Build tools, using deterministic stand-ins when ADLC_MODE=mock."""
+    import os
+
+    if os.getenv("ADLC_MODE", "real").strip().lower() == "mock":
+        script = {}
+        raw_script = os.getenv("ADLC_MOCK_SCRIPT", "")
+        if raw_script:
+            import json
+            script = json.loads(raw_script)
+        return stub_tools(copilot=StubCopilotCliTool(script))
+
     """Wire real implementations here as they become available."""
     from .codebase_tool import CodebaseTool
     from .copilot_cli_tool import CopilotCliTool

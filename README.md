@@ -75,26 +75,35 @@ The suite demonstrates:
 
 ## 5. Run the local demo API
 
-The demo uses stub Jira, GitHub, policy, budget, evidence, and Copilot components. Create a Python file or run the following command from the project root:
+Demo mode is isolated from external integrations:
 
 ```bash
-python - <<'PY'
-import uvicorn
-from langgraph.checkpoint.memory import InMemorySaver
-
-from src.config import load_settings
-from src.graph import build_graph
-from src.tools import stub_tools
-from src.tools.copilot_cli_tool import StubCopilotCliTool
-from src.webhook import create_app
-
-settings = load_settings()
-tools = stub_tools(copilot=StubCopilotCliTool())
-graph = build_graph(tools, settings, InMemorySaver())
-app = create_app(graph, tools, "demo-secret")
-uvicorn.run(app, host="127.0.0.1", port=8080)
-PY
+cp .env.example .env
+# .env should contain ADLC_MODE=mock
+python -m src.main
 ```
+
+In mock mode:
+
+- No LLM or Copilot CLI call is made
+- No Jira or GitHub API call is made
+- The webhook secret defaults to `demo-secret`
+- PostgreSQL is not used; memory checkpoints are used
+- `ADLC_MOCK_SCRIPT` can make stages fail or pass predictably
+
+For production:
+
+```bash
+ADLC_MODE=real
+ADLC_POSTGRES_DSN=postgresql://...
+ADLC_WEBHOOK_SECRET=your-long-random-secret
+ADLC_JIRA_TOKEN=your-jira-token
+ADLC_GITHUB_TOKEN=your-github-token
+ADLC_HOST=0.0.0.0
+ADLC_PORT=8080
+```
+
+The demo and production modes use the same LangGraph nodes, routing, gates, state, and HTTP API. Only tool implementations change, so no workflow rewrite is needed for promotion to production.
 
 Open the interactive Swagger UI:
 
